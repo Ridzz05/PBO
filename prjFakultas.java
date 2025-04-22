@@ -12,6 +12,10 @@ public class PrjFakultas {
         ps2.tambahMahasiswa(m2.getNpm());
         ps.hapusMahasiswa(m1.getNpm());
         ps2.hapusMahasiswa(m2.getNpm());
+        ps.hapusMahasiswaTerakhir();
+        ps2.hapusMahasiswaTerakhir();
+        ps.hapusMahasiswaBerdasarkanNpm(m1.getNpm());
+        ps2.hapusMahasiswaBerdasarkanNpm(m2.getNpm());
         ps.tampilkanMahasiswa();    
         ps2.tampilkanMahasiswa();    
         
@@ -53,13 +57,26 @@ class ProgramStudi{
 
     public void tampilkanMahasiswa(){
         System.out.println(kode + " - " + nama);
-        for(int i=0; i<daftarnpm.size(); i++){
-            System.out.println(daftarnpm.get(i).toString());
+        for(String npm : daftarnpm){
+            System.out.println(npm);
         }
         System.out.println("Total Mahasiswa : " + daftarnpm.size());
     }
 
     public void hapusMahasiswa(String npm){
         this.daftarnpm.remove(npm);
+    }
+
+    public void hapusMahasiswaTerakhir(){
+        if(!daftarnpm.isEmpty()){
+            this.daftarnpm.remove(this.daftarnpm.size()-1);
+        }
+    }
+
+    public void hapusMahasiswaBerdasarkanNpm(String npm){
+        int index = this.daftarnpm.indexOf(npm);
+        if(index >= 0){
+            this.daftarnpm.remove(index);
+        }
     }
 }
