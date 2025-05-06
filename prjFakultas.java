@@ -1,82 +1,87 @@
-package prjfakultas;
+package appointment;
 
 import java.util.ArrayList;
 
-public class PrjFakultas {
+public class Assignment1 {
+
     public static void main(String[] args) {
-        Mahasiswa m1 = new Mahasiswa("2428240069", "Algipari");
-        Mahasiswa m2 = new Mahasiswa("2428240070", "Agus");
-        ProgramStudi ps = new ProgramStudi( "2428240069", "Sistem Informasi");
-        ProgramStudi ps2 = new ProgramStudi("2428240070", "Teknik Informatika");
-        ps.tambahMahasiswa(m1.getNpm());
-        ps2.tambahMahasiswa(m2.getNpm());
-        ps.hapusMahasiswa(m1.getNpm());
-        ps2.hapusMahasiswa(m2.getNpm());
-        ps.hapusMahasiswaTerakhir();
-        ps2.hapusMahasiswaTerakhir();
-        ps.hapusMahasiswaBerdasarkanNpm(m1.getNpm());
-        ps2.hapusMahasiswaBerdasarkanNpm(m2.getNpm());
-        ps.tampilkanMahasiswa();    
-        ps2.tampilkanMahasiswa();    
-        
-    }                       
-}
 
-class Mahasiswa{
-    private String npm;
-    private String nama;
+        Appointment appointment1 = new Appointment("1", "2023-04-23", "04:00 - 08:00");
+        Appointment appointment2 = new Appointment("2", "2040-04-23", "10:00 - 14:00");
+        Appointment appointment3 = new Appointment("3", "2040-04-23", "10:00 - 14:00");
 
-    Mahasiswa(String npm, String nama){
-        this.npm = npm;
-        this.nama = nama;
-    }
-
-    public String getNpm(){
-        return npm;
-    }
-
-    public String getNama(){
-        return nama;
-    }
-}
-
-class ProgramStudi{
-    private String kode;
-    private String nama;
-    private ArrayList<String> daftarnpm; 
+        Customer customer1 = new Customer("1", "Siomay Racing", "08123823022", "Jalan Padi Sigma");
+        Customer customer2 = new Customer("2", "Yanto Icikiwir", "08123831232", "Jawa Nesia Acikow");
+        Customer customer3 = new Customer("3", "Siomay Racing", "08123823022", "Cihuy Slebew SatuDoeTiga");
     
-    ProgramStudi(String kode, String nama){
-        this.kode = kode;
-        this.nama = nama;
-        this.daftarnpm = new ArrayList<String>();
-    }
-
-    public void tambahMahasiswa(String npm){
-        this.daftarnpm.add(npm);
-    }
-
-    public void tampilkanMahasiswa(){
-        System.out.println(kode + " - " + nama);
-        for(String npm : daftarnpm){
-            System.out.println(npm);
-        }
-        System.out.println("Total Mahasiswa : " + daftarnpm.size());
-    }
-
-    public void hapusMahasiswa(String npm){
-        this.daftarnpm.remove(npm);
-    }
-
-    public void hapusMahasiswaTerakhir(){
-        if(!daftarnpm.isEmpty()){
-            this.daftarnpm.remove(this.daftarnpm.size()-1);
-        }
-    }
-
-    public void hapusMahasiswaBerdasarkanNpm(String npm){
-        int index = this.daftarnpm.indexOf(npm);
-        if(index >= 0){
-            this.daftarnpm.remove(index);
-        }
+        customer1.setAppointment(appointment1);
+        customer2.setAppointment(appointment2);
+        customer3.setAppointment(appointment3);
+        
+        customer1.showReservation();
+        customer2.showReservation();
+        customer3.showReservation();
     }
 }
+
+class Appointment {
+    private String appointmentId;
+    private String appointmentDate;
+    private String appointmentTime;
+    private Customer making;
+
+    public Appointment(String appointmentId, String appointmentDate, String appointmentTime) {
+        this.appointmentId = appointmentId;
+        this.appointmentDate = appointmentDate;
+        this.appointmentTime = appointmentTime;
+    }
+
+    public String getAppointmentId() { return this.appointmentId; }
+    public String getAppointmentDate() { return this.appointmentDate; }
+    public String getAppointmentTime() { return this.appointmentTime; }
+    public Customer getMaking() { return this.making; }
+    public void setMaking(Customer making) { this.making = making; }
+}
+
+class Customer {
+    private String customerId;
+    private String name;
+    private String phoneNumber;
+    private String street;
+    private ArrayList<Appointment> reservation;
+
+    public Customer(String customerId, String name, String phoneNumber, String street) {
+        this.customerId = customerId;
+        this.name = name;
+        this.phoneNumber = phoneNumber;
+        this.street = street;
+        this.reservation = new ArrayList<Appointment>();
+    }
+
+    public String getName() { return this.name; }
+
+    public void setAppointment(Appointment appointment) {
+        this.reservation.add(appointment);
+        appointment.setMaking(this);
+    }
+
+    public void showReservation() {
+        System.out.println("================================");
+        System.out.println("Customer ID = " + this.customerId);
+        System.out.println("Name = " + this.name);
+        System.out.println("Phone Number = " + this.phoneNumber);
+        System.out.println("Alamat = " + this.street);
+        System.out.println("Appointments:");
+        if (reservation.isEmpty()) {
+            System.out.println("No appointments");
+        } else {
+            for (Appointment apt : reservation) {
+                System.out.println("  - ID: " + apt.getAppointmentId() + 
+                                 ", Date: " + apt.getAppointmentDate() + 
+                                 ", Time: " + apt.getAppointmentTime());
+            }
+        }
+        System.out.println("================================");
+    }
+}
+
