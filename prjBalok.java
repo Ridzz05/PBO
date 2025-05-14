@@ -1,6 +1,6 @@
 class prjBalok {
 public static void main(String[] args) {
-    
+                    
 } 
 }
 
@@ -22,6 +22,11 @@ class segiEmpat {
     public void hitungKeliling() {
         this.keliling = 2 * (this.panjang + this.lebar);
     }
+
+    public void tampilHasil() {
+        System.out.println("Luas: " + this.luas);
+        System.out.println("Keliling: " + this.keliling);
+    }
 }
 
 class balok extends segiEmpat {
@@ -29,8 +34,16 @@ class balok extends segiEmpat {
     private int volume;
 
     balok(int panjang, int lebar, int tinggi) {
-        super(panjang, lebar); 
+        super(panjang, lebar);
         this.tinggi = tinggi;
     }
-    
+
+    public void hitungVolume() {
+        this.volume = super.panjang * super.lebar * super.tinggi;
+    }
+
+    public void tampilHasil() {
+        super.tampilHasil();
+        System.out.println("Volume: " + this.volume);
+    }
 }
