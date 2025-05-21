@@ -16,5 +16,4 @@ class Pegawai<AnyType>{
     public AnyType getNik(){
         return nik;
     }
-    System.out.println("NIK: " + nik);
 }
